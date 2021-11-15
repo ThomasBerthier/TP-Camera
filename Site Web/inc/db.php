@@ -2,10 +2,10 @@
 
 // Configuration of database connection
 $_DB = array(
-    "hostname" => "",
-    "username" => "",
-    "password" => "",
-    "db_name" => ""
+    "hostname" => "192.168.65.137",
+    "username" => "root",
+    "password" => "root",
+    "db_name" => "camera"
 );
 
 // Create connexion to database
