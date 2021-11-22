@@ -1,7 +1,7 @@
 <?php 
 
-class CamMove {
-
+class CamMove 
+{
     // Init variables
     private $idCam;
 
@@ -17,7 +17,7 @@ class CamMove {
      */
     public function camUp() 
     {
-        //Ordre(81 01 06 01 08 08 03 01 FF);
+        Ordre('81 01 06 01 08 08 03 01 FF');
     }
 
     /**
@@ -25,7 +25,7 @@ class CamMove {
      */
     public function camDown() 
     {
-        //Ordre(81 01 06 01 08 08 03 02 FF);
+        Ordre('81 01 06 01 08 08 03 02 FF');
     }
 
     /**
@@ -33,7 +33,7 @@ class CamMove {
      */
     public function camLeft() 
     {
-        //Ordre(81 01 06 01 08 08 01 03 FF);
+        Ordre('81 01 06 01 08 08 01 03 FF');
     }
 
     /**
@@ -41,7 +41,7 @@ class CamMove {
      */
     public function camRight() 
     {
-        //Ordre(81 01 06 01 08 08 02 03 FF);
+        Ordre('81 01 06 01 08 08 02 03 FF');
     }
 
     /**
@@ -49,7 +49,7 @@ class CamMove {
      */
     public function camZoomP() 
     {
-        //Ordre(81 01 04 07 02 FF);
+        Ordre('81 01 04 07 02 FF');
     }
 
     /**
@@ -57,7 +57,7 @@ class CamMove {
      */
     public function camZoomM() 
     {
-        //Ordre(81 01 04 07 00 FF);
+        Ordre('81 01 04 07 00 FF');
     }
 
     /**
@@ -65,7 +65,7 @@ class CamMove {
      */
     public function camStart() 
     {
-        //Ordre(81 01 04 00 02 FF);
+        Ordre('81 01 04 00 02 FF');
     }
 
     /**
@@ -73,7 +73,7 @@ class CamMove {
      */
     public function camStop() 
     {
-        //Ordre(81 01 04 00 03 FF);
+        Ordre('81 01 04 00 03 FF');
     }
 
     /**
@@ -81,7 +81,7 @@ class CamMove {
      */
     public function camReset() 
     {
-        //Ordre(81 01 06 02 08 08 0Y 0Y 0Y 0Y 0Z 0Z 0Z 0Z FF);
+        Ordre('81 01 06 02 08 08 0Y 0Y 0Y 0Y 0Z 0Z 0Z 0Z FF');
     }
 
 }

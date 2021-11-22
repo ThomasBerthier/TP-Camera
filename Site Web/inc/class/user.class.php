@@ -34,9 +34,20 @@ class User {
             //si ce n'est pas le bon MdP :
             if (!$stmt) 
             {
+                $this->_email = $email;
+
                 $stmt = $this->_sql->prepare("INSERT INTO `user`(`email`, `mdp`) VALUES (?,?)");
                 $stmt->execute(array($email, $password));
                 $stmt = $stmt->fetch();
+
+                $stmt = $this->_sql->prepare("SELECT `ID`, `permission` FROM `user` WHERE `email` = ? AND `mdp` = ?");
+                $stmt->execute(array($email, $password));
+                $stmt = $stmt->fetch();
+
+                $this->_id = $stmt['ID'];
+                $this->_permissions = $stmt['permission'];
+
+                echo "ID : "+$this->_id;
 
                 $_SESSION['Connect']=true;
                 //Refresh la page pour pouvoir acceder au autres page.
@@ -70,10 +81,16 @@ class User {
         {
             echo "Mauvais nom d'utilisateur ou mot de passe.";
         } else 
-        {
+        {   
+            $this->_email = $email;
+            $this->_id = $stmt['ID'];
+            $this->_permissions = $stmt['permission'];
+
+            echo "ID : "+$this->_id;
+
             $_SESSION['Connect']=true;
             //Refresh la page pour pouvoir acceder au autres page.
-            echo "fjne";
+            
             header("Refresh:0");
         }   
     }

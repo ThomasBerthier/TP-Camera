@@ -6,5 +6,5 @@ function Ordre(OrdreHexa)
 
     socket = new WebSocket("ws://127.0.0.1:1234");
 
-    
+    socket.send(OrdreHexa);   
 }
