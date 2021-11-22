@@ -8,11 +8,11 @@ require_once "db.php";
 $_CONFIG = array();
 
 // Init class
-require "user.class.php";
+require "class/user.class.php";
 $user = new User($_SQL);
 
-require "cam.class.php";
+require "class/cam.class.php";
 $cam = new Cam($_SQL);
 
-require "move.class.php";
+require "class/move.class.php";
 //$camMove = new CamMove($idCam);
