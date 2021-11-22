@@ -71,7 +71,7 @@ Bouton pour piloter cam
             </button>
 
 
-            <button class="favorite styled " type="button" onclick=>
+            <button class="favorite styled " type="button" onclick="window.location.href='inc/logout.php';">
                 Déconnexion
             </button>
         <?php 

@@ -95,5 +95,4 @@ class User {
     public function isSpectator() {
         
     }
-
 }
