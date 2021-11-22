@@ -32,7 +32,7 @@ Bouton pour piloter cam
         if($_SESSION && $_SESSION['Connect'] ==true)
         {
             //Instancier cam :
-            $Camera = new Cam;
+            $Camera = new Cam($_SQL);
             ?>
             <button class="favorite styled " type="button" onclick=>
                 Allumer
@@ -70,6 +70,10 @@ Bouton pour piloter cam
                 Stop Zoom
             </button>
 
+
+            <button class="favorite styled " type="button" onclick=>
+                Déconnexion
+            </button>
         <?php 
         } else 
         {
