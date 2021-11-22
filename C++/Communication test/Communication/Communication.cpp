@@ -21,7 +21,7 @@ void Communication::onWebClientDisconnected()
 {
 
 }
-//Recupere un json, le traite et envoie les trames au moxa en fonctions de la méthode recue
+//Recupere un json, le traite et envoie les trames au moxa en fonction de la méthode recue
 void Communication::onWebClientCommunication()
 {
 
