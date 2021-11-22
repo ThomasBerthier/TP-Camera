@@ -26,9 +26,4 @@ public slots:
 
 	void onConnectButtonClicked();
 	void onSendMessageButtonClicked();
-	void onSocketReadyRead();
-
-	void onServerNewConnection();
-	void onClientDisconnected();
-	void onClientReadyRead();
 };
