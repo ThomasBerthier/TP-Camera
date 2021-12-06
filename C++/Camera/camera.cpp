@@ -1,4 +1,5 @@
 #include "camera.h"
+
 #include <QDebug>
 
 Camera::Camera(QObject *parent)
