@@ -23,7 +23,6 @@ Camera::Camera(QWidget *parent) :
 
 void Camera::onSocketConnected()
 {
-    // Receive JSON
     qDebug() << "Socket connected";
 }
 
