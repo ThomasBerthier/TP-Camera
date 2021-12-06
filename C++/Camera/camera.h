@@ -1,17 +1,17 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <QTcpSocket>
-#include <QtWebSockets/QtWebSockets>
 #include "QtWebSockets/qwebsocketserver.h"
 #include "QtWebSockets/qwebsocket.h"
+
+#include <QTcpSocket>
+#include <QtWebSockets/QtWebSockets>
 #include <QDebug>
 #include <QtCore>
 #include <QObject>
 
 class Camera : public QObject
 {
-
     public:
         Camera(QObject *parent = Q_NULLPTR);
 
@@ -50,5 +50,4 @@ class Camera : public QObject
         void camZoomMax();
         void camZoomStop();
 };
-
 #endif // CAMERA_H
