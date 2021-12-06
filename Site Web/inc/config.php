@@ -15,4 +15,4 @@ require "class/cam.class.php";
 $cam = new Cam($_SQL);
 
 require "class/move.class.php";
-//$camMove = new CamMove($idCam);
+$camMove = new CamMove();

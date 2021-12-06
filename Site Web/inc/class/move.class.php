@@ -3,13 +3,11 @@
 class CamMove 
 {
     // Init variables
-    private $idCam;
-
     private $method;
     private $speed;
 
-    public function __construct($idCam) {
-        $this->_idCam = $idCam;
+    public function __construct() {
+        
     }
 
     /**
@@ -17,7 +15,11 @@ class CamMove
      */
     public function camUp() 
     {
-        Ordre('81 01 06 01 08 08 03 01 FF');
+        ?>
+        <script type="text/javascript" src="Ordre.js">
+            Ordre("camUp");
+        </script>
+        <?php
     }
 
     /**
@@ -25,7 +27,11 @@ class CamMove
      */
     public function camDown() 
     {
-        Ordre('81 01 06 01 08 08 03 02 FF');
+        ?>
+        <script type="text/javascript" src="Ordre.js">
+        Ordre('moveDown');
+        </script>
+        <?php
     }
 
     /**
@@ -33,7 +39,12 @@ class CamMove
      */
     public function camLeft() 
     {
-        Ordre('81 01 06 01 08 08 01 03 FF');
+        ?>
+        <script type="text/javascript" src="Ordre.js">
+        Ordre('moveLeft');
+        </script>
+        <?php
+
     }
 
     /**
@@ -41,7 +52,12 @@ class CamMove
      */
     public function camRight() 
     {
-        Ordre('81 01 06 01 08 08 02 03 FF');
+        ?>
+        <script type='text/javascript' src='Ordre.js'>
+        Ordre('moveRight');
+        </script>
+        <?php
+
     }
 
     /**
@@ -49,7 +65,12 @@ class CamMove
      */
     public function camZoomP() 
     {
-        Ordre('81 01 04 07 02 FF');
+        ?>
+        <script type='text/javascript' src='Ordre.js'>
+        Ordre('zoomMax');
+        </script>
+        <?php
+
     }
 
     /**
@@ -57,7 +78,12 @@ class CamMove
      */
     public function camZoomM() 
     {
-        Ordre('81 01 04 07 00 FF');
+        ?>
+        <script type='text/javascript' src='Ordre.js'>
+        Ordre('zoomMin');
+        </script>
+        <?php
+
     }
 
     /**
@@ -65,7 +91,13 @@ class CamMove
      */
     public function camStart() 
     {
-        Ordre('81 01 04 00 02 FF');
+        ?>
+            <script type='text/javascript' src='Ordre.js'>
+                console.log('fjrjgrje');
+                Ordre('camStart');
+                console.log('fujrehfuirefurhefuhruefhurefhuirefhuirehfu');
+            </script>
+        <?php
     }
 
     /**
@@ -73,7 +105,11 @@ class CamMove
      */
     public function camStop() 
     {
-        Ordre('81 01 04 00 03 FF');
+        ?>
+        <script type="text/javascript" src="Ordre.js">
+            Ordre("camOff");
+        </script>
+        <?php
     }
 
     /**
@@ -81,7 +117,12 @@ class CamMove
      */
     public function camReset() 
     {
-        Ordre('81 01 06 02 08 08 0Y 0Y 0Y 0Y 0Z 0Z 0Z 0Z FF');
+        ?>
+        <script type='text/javascript' src='Ordre.js'>
+        Ordre('moveReset');
+        </script>
+        <?php
+
     }
 
 }

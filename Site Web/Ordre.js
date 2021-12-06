@@ -1,10 +1,28 @@
 //Envoyer commande en Héxa au C++
-function Ordre(OrdreHexa)
+//Envoier commande en héxa
+
+function Ordre(Ordre)
 {
     //Envoier commande en héxa
-    var socket = null;
+    //var socket = new WebSocket("ws://192.168.65.28:16050");
+    socket.send(Ordre);
+}
 
-    socket = new WebSocket("ws://127.0.0.1:1234");
+function Connect(lien)
+{
+    //Envoier commande en héxa
+    var socket = new WebSocket(lien);
+}
 
-    socket.send(OrdreHexa);   
+function CacherEdit()
+{
+    let Creation = document.getElementById("NewCam");
+    let Edit = document.getElementById("EditCam");
+    let Bouton = document.getElementById("Boutton");
+    let Suppr = document.getElementById("Suppr")
+
+    Creation.style.display = "block"
+    Edit.style.display = "none";
+    Bouton.style.display = "none";
+    Suppr.style.display = "none";
 }

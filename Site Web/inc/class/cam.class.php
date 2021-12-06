@@ -1,5 +1,4 @@
 <?php 
-
 class Cam {
     
     // Init variables
@@ -24,41 +23,42 @@ class Cam {
      */
     public function createCam($localisation, $ipAddress, $port) 
     {
+        console_log($localisation);
+        console_log($ipAddress);
+        console_log($port);
+
         $this->_localisation = $localisation;
         $this->_ipaddress = $ipAddress;
         $this->_port = $port;
 
         $stmt = $this->_sql->prepare("INSERT INTO `cam`(`Localisation`, `IP`, `Port`) VALUES (?, ?, ?)");
-        $stmt->execute(array($localisation, $ipAddress, $port));
+        $stmt->execute(array($this->_localisation, $this->_ipaddress, $this->_port));
         $stmt = $stmt->fetch();
-        if (!$stmt) 
-        {
-            //echo "<script type='text/javascript'>alert('j pu la merde')</script>";
-            echo "Les Problème";
-        } else 
-        {
+
             $stmt = $this->_sql->prepare("SELECT `ID` FROM `cam` WHERE `Localisation`= ? AND `IP`= ? AND `Port` = ?");
             $stmt->execute(array($localisation, $ipAddress, $port));
             $stmt = $stmt->fetch();
             $this->_id = $stmt;
-            ?>
 
-            <script type="text/javascript">
-                let Creation = document.getElementById("NewCam");
-                let Edit = document.getElementById("EditCam");
-                let Bouton = document.getElementById("Boutton");
-                let Suppr = document.getElementById("Suppr")
-            
-                Creation.style.display = "block"
-                Edit.style.display = "none";
-                Bouton.style.display = "none";
-                Suppr.style.display = "none";
-            </script>
-
-            <?php
+        ?>
+        <!--
+        <script type="text/javascript">
+            let Creation = document.getElementById("NewCam");
+            let Edit = document.getElementById("EditCam");
+            let Bouton = document.getElementById("Boutton");
+            let Suppr = document.getElementById("Suppr");
+        
+            Creation.style.display = "none";
+            Edit.style.display = "block";
+            Bouton.style.display = "block";
+            Suppr.style.display = "block";
+        </script>
+        -->
+        <?php
             //Création de camMove maintenant qu'on a l'ID
-            $camMove = new CamMove($this->_id);
-        }
+            //$camMove = new CamMove($this->_id);
+        
+        //echo json_encode(array('localisation' => $this->_localisation , 'ipAddress' =>  $this->_ipAddress , "port" => $this->_port));
     }
 
     /** 
@@ -79,20 +79,6 @@ class Cam {
         $stmt = $this->_sql->prepare("UPDATE `cam` SET `Localisation`='?',`IP`='?',`Port`='?' WHERE `ID`=?");
         $stmt->execute(array($localisation, $ipAddress, $port, $this->_id));
         $stmt = $stmt->fetch();
-        ?>
-        <script type="text/javascript">
-
-            let Creation = document.getElementById("NewCam");
-            let Edit = document.getElementById("EditCam");
-            let Bouton = document.getElementById("Boutton");
-            let Suppr = document.getElementById("Suppr")
-        
-            Creation.style.display = "none"
-            Edit.style.display = "block";
-            Bouton.style.display = "block";
-            Suppr.style.display = "block";
-        </script>
-        <?php
     }
 
     /** 
@@ -113,9 +99,9 @@ class Cam {
             let Creation = document.getElementById("NewCam");
             let Edit = document.getElementById("EditCam");
             let Bouton = document.getElementById("Boutton");
-            let Suppr = document.getElementById("Suppr")
+            let Suppr = document.getElementById("Suppr");
         
-            Creation.style.display = "block"
+            Creation.style.display = "block";
             Edit.style.display = "none";
             Bouton.style.display = "none";
             Suppr.style.display = "none";
@@ -129,3 +115,4 @@ class Cam {
     }
 
 }
+?>

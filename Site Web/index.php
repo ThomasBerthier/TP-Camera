@@ -1,38 +1,32 @@
-<!-- Pour piloter la caméra : 
-Allumer         
-Eteindre        
-Vers le haut    
-Vers le bas     
-Gauche          
-Droite          
-Reset position  
-Zoom            
-Dézoom          
-Stop            
-Balayage ???    
-
-Session
-Bouton pour piloter cam
--->
 <?php
     require "Session.php";
+    include "console_log.php";
+    include "tamere.php";
 ?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <link rel="icon" href="Image/Shellos-Icone.ico">
         <title>Control Caméra</title>
-        <script type="text/javascript" src="Ordre.js"></script>
         <!-- Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <script src="Formulaire.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
     </head>
     <body>
         <?php
-        if($_SESSION && $_SESSION['Connect'] ==true)
+        if($_SESSION && $_SESSION['Connect'] == true)
         {
-            //Instancier cam :
-            $Camera = new Cam($_SQL);
+            
+            $localisation = !empty($_POST['localisation']) ? $_POST['localisation'] : "";
+            $ipadress = !empty($_POST['ipadress']) ? $_POST['ipadress'] : "";
+            $port = !empty($_POST['port']) ? $_POST['port'] : "";
+
+            $fulldick = "ws://".$ipadress.":".$port;
+            console_log($fulldick);
+            if($fulldick == "ws://:")
+            {
             ?>
             <!-- Formulaire pour connecter la cam -->
             <form id="NewCam" method="POST">
@@ -47,81 +41,168 @@ Bouton pour piloter cam
                 <label><strong>Port</strong></label>
                 <input type="text" placeholder="Port" name="port" required>
 
-                <input type="button" name='submit' value='Nouvelle Caméra' onclick="<?php $Camera->createCam($_POST['localisation'], $_POST['ipadress'], $_POST['port']) ?>">
+
+                <input class="favorite styled"  type="submit" name="newCam" onclick="créerCam(<?= $fulldick ?>);" value="Créer Caméra">
+
             </form>
 
-            <!-- Formulaire d'édit -->
-            <form id="EditCam" method="POST">
-                <h1>Edit Configuration caméra :</h1>
-                <label><strong>Changer Localisation</strong></label>
-                <input type="text" placeholder="Changer Localisation" name="Editlocalisation" required>
+            <?php
+            }
+            if($fulldick != "ws://:")
+            {
+                $Editlocalisation = !empty($_POST['Editlocalisation']) ? $_POST['Editlocalisation'] : "";
+                $Editipadress = !empty($_POST['Editipadress']) ? $_POST['Editipadress'] : "";
+                $Editport = !empty($_POST['Editport']) ? $_POST['Editport'] : "";
+    
+                $Editfulldick = "ws://".$Editipadress.":".$Editport;
+                console_log($fulldick);
+                ?>
 
-                <label><strong>Changer Adresse IP</strong></label>
-                <input type="text" placeholder="Changer Adresse IP" name="Editipadress" required>
+                <form id="EditCam" method="POST">
+                    <h1>Edit Configuration caméra :</h1>
+                    <label><strong>Changer Localisation</strong></label>
+                    <input type="text" placeholder="Changer Localisation" name="Editlocalisation" required>
 
-                <label><strong>Changer Port</strong></label>
-                <input type="text" placeholder="Changer Port" name="Editport" required>
+                    <label><strong>Changer Adresse IP</strong></label>
+                    <input type="text" placeholder="Changer Adresse IP" name="Editipadress" required>
 
-                <input type="button" name='EditSubmit' value='Editer Caméra' onclick="<?php $Camera->editCam($_POST['localisation'], $_POST['ipadress'], $_POST['port']) ?>">
-            </form>
+                    <label><strong>Changer Port</strong></label>
+                    <input type="text" placeholder="Changer Port" name="Editport" required>
 
-            <form id="Suppr" method="POST">
-                <input type="button" name='DelSubmit' value='Supprimer Caméra' onclick="<?php $Camera->delCam($_POST['localisation'], $_POST['ipadress'], $_POST['port']) ?>">
-            </form>
+                    <input class="favorite styled"  type="submit" name="editCam" onclick="editCam(<?= $Editfulldick ?>);" value="Edite Caméra">
+                </form>
 
-            <!-- Bouton pour donner ordre -->
-            <div id="Boutton">
-                <button class="favorite styled " type="button" onclick='$camMove->camStart()'>
-                    Allumer
-                </button>
-                <button class="favorite styled" type="button" onclick='$camMove->camStop()'>
-                    Eteindre
-                </button>
+                <form onsubmit="return false">
+                    <a href="?method=start">
+                        <input class="favorite styled"  type="submit" onclick="Ordre('camOn');" value="Démarrer">
+                    </a>
 
-                <button class="favorite styled" type="button" onclick='$camMove->camUp()'>
-                    Haut
-                </button>
-                <button class="favorite styled" type="button" onclick='$camMove->camDown()'>
-                    Bas
-                </button>
-                <button class="favorite styled" type="button" onclick='$camMove->camLeft()'>
-                    Gauche
-                </button>
-                <button class="favorite styled" type="button" onclick='$camMove->camRight()'>
-                    Droite
-                </button>
-                <button class="favorite styled" type="button" onclick='$camMove->camReset()'>
-                    Position Initiale
-                </button>
-                <button class="favorite styled" type="button" onclick=>
-                    Stop
-                </button>
+                    <a href="?method=stop">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('camOff');">Eteindre</button>
+                    </a>
 
-                <button class="favorite styled position-absolute top-0 end-0" type="button" onclick='$camMove->camZoomP()'>
-                    Zoom
-                </button>
-                <button class="favorite styled position-absolute top-50 end-0" type="button" onclick='$camMove->camZoomM()'>
-                    Dézoom
-                </button>
-                <button class="favorite styled position-absolute top-100 end-0" type="button" onclick=>
-                    Stop Zoom
-                </button>
-            </div>
+                    <a href="?method=up">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('moveUp');">Haut</button>
+                    </a>
 
-            <div id="Deco">
-            <!-- Déconnexion de l'utilisateur -->
-                <button class="favorite styled " type="button" onclick="window.location.href='inc/logout.php';">
-                    Déconnexion
-                </button>
-            </div>
-        <?php 
-        } else 
-        {
+                    <a href="?method=down">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('moveDown');">Bas</button>
+                    </a>
 
-        }
-        echo '<script type="text/javascript">CacherEdit();</script>';
+                    <a href="?method=left">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('moveLeft');">Gauche</button>
+                    </a>
+
+                    <a href="?method=right">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('moveRight');">Droite</button>
+                    </a>
+
+                    <a href="?method=stop">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('movementStop');">Stop</button>
+                    </a>
+
+                    <a href="?method=reset">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('moveReset');">Reset</button>
+                    </a>
+
+                    <a href="?method=zoom">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('zoomMax');">Zoom</button>
+                    </a>
+
+                    <a href="?method=dezoom">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('zoomMin');">Dézoom</button>
+                    </a>
+
+                    <a href="?method=stopzoom">
+                        <button class="favorite styled"  type="submit" onclick="Ordre('zoomStop');">Stop Zoom</button>
+                    </a>
+                </form>
+                    <div id="Deco">
+                    <!-- Déconnexion de l'utilisateur -->
+                        <button class="favorite styled " type="button" onclick="window.location.href='inc/logout.php';">
+                            Déconnexion
+                        </button>
+                    </div>
+                    
+                <?php 
+
+                if(isset($_GET["method"])) {
+                    if($_GET["method"] == "start") {
+                        $camMove->camStart();
+                    }
+            
+                    if($_GET["method"] == "stop") {
+                        $camMove->camStop();
+                    }
+
+                    if($_GET["method"] == "up") {
+                        
+                        $camMove->camUp();
+                    }
+
+                    if($_GET["method"] == "down") {
+                        
+                        $camMove->camDown();
+                    }
+
+                    if($_GET["method"] == "left") {
+                        
+                        $camMove->camLeft();
+                    }
+
+                    if($_GET["method"] == "right") {
+                        
+                        $camMove->camRight();
+                    }
+
+                    if($_GET["method"] == "stop") {
+                        
+                        $camMove->camStop();
+                    }
+
+                    if($_GET["method"] == "zoom") {
+                        
+                        $camMove->camZoomM();
+                    }
+
+                    if($_GET["method"] == "dezoom") {
+                        
+                        $camMove->camZoomP();
+                    }
+
+                    if($_GET["method"] == "stopzoom") {
+                        
+                        $camMove->camStop();
+                    }
+                }
+            }
+        }    
         ?>
+
+        <script type="text/javascript" src="Formulaire.js"></script>
+        <script type="text/javascript" src="jQuery.js"></script>
+        
+        <script>
+            function Ordre(method)
+            {
+                //Envoier commande en héxa
+                //var socket = new WebSocket("ws://192.168.65.28:16050");    
+                socket.send(method);
+            }
+        </script>
+        <script>
+            function créerCam(valeurCam)
+            {
+                var socket = new WebSocket(ValeurCam);
+            }
+        </script>
+        <script>
+            function editCam(editvaleurCam)
+            {
+                socket.close();
+                var socket = new WebSocket(editValeurCam);
+            }
+        </script>
+
     </body>
 </html>
-
-<!-- Doit envoyer JSON avec methode JS vers websocket-->
