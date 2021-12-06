@@ -6,7 +6,6 @@ Camera::Camera(QObject *parent)
 // Web Socket Configuration
 webSocketServer = new QWebSocketServer(QStringLiteral("WebServer"), QWebSocketServer::NonSecureMode, this);
 
-
 connect(webSocketServer, &QWebSocketServer::newConnection, this, &Camera::newWebConnexion);
     webSocketServer->listen(QHostAddress::AnyIPv4, 16050);
 
@@ -14,13 +13,10 @@ connect(webSocketServer, &QWebSocketServer::newConnection, this, &Camera::newWeb
 socket = new QTcpSocket(this);
 connect(socket, &QTcpSocket::connected, this, &Camera::onSocketConnected);
     socket->connectToHost("192.168.64.150", 4001);
-
 }
-
 
 void Camera::onSocketConnected()
 {
-
     qDebug() << "Socket connected";
 }
 
@@ -105,18 +101,13 @@ void Camera::camOff() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camUp() {
     // Convert string to hex
-    qDebug() << "test 1";
     QByteArray data = QByteArray::fromHex("81 01 06 01 07 07 03 01 FF");
-qDebug() << "test 2";
     // Send data to issue function
-qDebug() << "test 3";
     issue(data);
-
 }
 
 void Camera::camDown() {
@@ -125,7 +116,6 @@ void Camera::camDown() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camLeft() {
@@ -134,7 +124,6 @@ void Camera::camLeft() {
 qDebug() << "ok";
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camRight() {
@@ -144,7 +133,6 @@ void Camera::camRight() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camPositionReset() {
@@ -153,7 +141,6 @@ void Camera::camPositionReset() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camMovementStop() {
@@ -162,7 +149,6 @@ void Camera::camMovementStop() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camZoomMin() {
@@ -171,7 +157,6 @@ void Camera::camZoomMin() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camZoomMax() {
@@ -180,7 +165,6 @@ void Camera::camZoomMax() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::camZoomStop() {
@@ -189,7 +173,6 @@ void Camera::camZoomStop() {
 
     // Send data to issue function
     issue(data);
-
 }
 
 void Camera::issue(QByteArray data)
