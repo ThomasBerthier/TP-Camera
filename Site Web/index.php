@@ -30,159 +30,189 @@
             $fulldick = "ws://".$ipadress.":".$port;
 
             console_log("PHP : ".$fulldick);
-            if($fulldick == "ws://:")
+
+
+            $IDUser = $_SESSION['ID'];
+
+            $permission = $user->isEditor($IDUser);
+
+            console_log("Perm : ".$permission);
+            //Vérifier si il y a 1 caméra en base : 
+            $IDCam = $cam->verifCam();
+
+            //Si la cam existe en base :
+            if ($IDCam != true)
             {
-                ?>
-                <!-- Formulaire pour connecter la cam -->
-                <form id="NewCam" method="POST">
-                    <h1 id="InfoTypeFormulaire">Configuration caméra :</h1>
-                    <!-- Unexpected indentifier -->
-                    <label><strong>Localisation</strong></label>
-                    <input type="text" placeholder="Localisation" name="localisation" required>
-
-                    <label><strong>Adresse IP</strong></label>
-                    <input id="ipadress" type="text" placeholder="Adresse IP" name="ipadress" required>
-
-                    <label><strong>Port</strong></label>
-                    <input id="port" type="text" placeholder="Port" name="port" required>
-
-                    <input class="favorite styled" type="submit" name="newCam" onclick="creerCam(socket);" value="Créer Caméra">
-                </form>
-                <?php
-            }
-            if($fulldick != "ws://:")
+                //Si l'utilisateur est admin
+                if ($permission == 1)
+                {
+                    ?>
+                    <!-- Formulaire pour connecter la cam -->
+                    <form id="NewCam" method="POST">
+                        <h1 id="InfoTypeFormulaire">Configuration caméra :</h1>
+                        <!-- Unexpected indentifier -->
+                        <label><strong>Localisation</strong></label>
+                        <input type="text" placeholder="Localisation" name="localisation" required>
+        
+                        <label><strong>Adresse IP</strong></label>
+                        <input id="ipadress" type="text" placeholder="Adresse IP" name="ipadress" required>
+        
+                        <label><strong>Port</strong></label>
+                        <input id="port" type="text" placeholder="Port" name="port" required>
+    
+                        <input class="favorite styled" type="submit" name="newCam" onclick="creerCam(socket);" value="Créer Caméra">
+                    </form>
+                    <?php
+                } elseif($permission == 0) //Si le serv est connecté
+                {
+                    ?>
+                    <div>
+                        Aucune caméra n'est enregistré en base, merci de contacter les personnes compétantes pour le faire.
+                    </div>
+                    <?php
+                }
+            } else //Si il y a une cam
             {
-                console_log("PHP : ".$fulldick);
+                if($permission == 1)
+                {
+                    ?>
+                    <form id="NewCam" method="POST">
+                        <h1 id="InfoTypeFormulaire"> Edit Configuration caméra : </h1>
+                        <!-- Unexpected indentifier -->
+                        <label><strong>Localisation</strong></label>
+                        <input type="text" placeholder="Localisation" name="localisation" required>
+
+                        <label><strong>Adresse IP</strong></label>
+                        <input type="text" placeholder="Adresse IP" name="ipadress" required>
+                
+                        <label><strong>Port</strong></label>
+                        <input type="text" placeholder="Port" name="port" required>
+            
+                        <input class="favorite styled"  type="submit" name="editCam" onclick="creerCam('<?=$fulldick?>');" value="Edit Cam">
+                    </form>
+                    <?php
+                }
                 ?>
-                <script>
-                    socket = new WebSocket('<?= $fulldick ?>');
-
-                    console.log("JS : "+socket); 
-                    console.log("readyState : "+socket.readyState)
-
-                </script>
-
-                <form id="NewCam" method="POST">
-                    <h1 id="InfoTypeFormulaire">Edit Configuration caméra :</h1>
-                    <!-- Unexpected indentifier -->
-                    <label><strong>Localisation</strong></label>
-                    <input type="text" placeholder="Localisation" name="localisation" required>
-
-                    <label><strong>Adresse IP</strong></label>
-                    <input type="text" placeholder="Adresse IP" name="ipadress" required>
-
-                    <label><strong>Port</strong></label>
-                    <input type="text" placeholder="Port" name="port" required>
-
-                    <input class="favorite styled"  type="submit" name="editCam" onclick="creerCam('<?=$fulldick?>');" value="Edit Cam">
-                </form>
-
                 <form onsubmit="return false">
                     <a href="?method=start">
                         <input class="favorite styled"  type="submit" onclick="Ordre('camOn', '<?=$fulldick?>');" value="Démarrer">
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=stop">
                         <button class="favorite styled"  type="submit" onclick="Ordre('camOff');">Eteindre</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=up">
                         <button class="favorite styled"  type="submit" onclick="Ordre('moveUp');">Haut</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=down">
                         <button class="favorite styled"  type="submit" onclick="Ordre('moveDown');">Bas</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=left">
                         <button class="favorite styled"  type="submit" onclick="Ordre('moveLeft');">Gauche</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=right">
                         <button class="favorite styled"  type="submit" onclick="Ordre('moveRight');">Droite</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=stop">
                         <button class="favorite styled"  type="submit" onclick="Ordre('movementStop');">Stop</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=reset">
                         <button class="favorite styled"  type="submit" onclick="Ordre('moveReset');">Reset</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=zoom">
                         <button class="favorite styled"  type="submit" onclick="Ordre('zoomMax');">Zoom</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=dezoom">
                         <button class="favorite styled"  type="submit" onclick="Ordre('zoomMin');">Dézoom</button>
                     </a>
+                </form>
 
+                <form onsubmit="return false">
                     <a href="?method=stopzoom">
                         <button class="favorite styled"  type="submit" onclick="Ordre('zoomStop');">Stop Zoom</button>
                     </a>
                 </form>
-                <div id="Deco">
-                <!-- Déconnexion de l'utilisateur -->
-                    <button class="favorite styled " type="button" onclick="window.location.href='inc/logout.php';">
-                        Déconnexion
-                    </button>
-                </div>
-                    
-                <?php 
+                <?php
+            }
+            ?>
+            <div id="Deco">
+            <!-- Déconnexion de l'utilisateur -->
+                <button class="favorite styled " type="button" onclick="window.location.href='inc/logout.php';">
+                    Déconnexion
+                </button>
+            </div>
                 
-                if(isset($_GET["method"])) 
-                {
-                    if($_GET["method"] == "start") {
-                        $camMove->camStart($fulldick);
-                    }
+            <?php 
+                
+            if(isset($_GET["method"])) 
+            {
+                if($_GET["method"] == "start") {
+                    $camMove->camStart($fulldick);
+                }
             
-                    if($_GET["method"] == "stop") {
-                        $camMove->camStop();
-                    }
+                if($_GET["method"] == "stop") {
+                    $camMove->camStop();
+                }
 
-                    if($_GET["method"] == "up") {
-                        
-                        $camMove->camUp();
-                    }
+                if($_GET["method"] == "up") {
+                    $camMove->camUp();
+                }
 
-                    if($_GET["method"] == "down") {
-                        
-                        $camMove->camDown();
-                    }
+                if($_GET["method"] == "down") {            
+                    $camMove->camDown();
+                }
 
-                    if($_GET["method"] == "left") {
-                        
-                        $camMove->camLeft();
-                    }
+                if($_GET["method"] == "left") { 
+                    $camMove->camLeft();
+                }
 
-                    if($_GET["method"] == "right") {
-                        
-                        $camMove->camRight();
-                    }
+                if($_GET["method"] == "right") {
+                    $camMove->camRight();
+                }
 
-                    if($_GET["method"] == "stop") {
-                        
-                        $camMove->camStop();
-                    }
+                if($_GET["method"] == "stop") {
+                    $camMove->camStop();
+                }
 
-                    if($_GET["method"] == "zoom") {
-                        
-                        $camMove->camZoomM();
-                    }
+                if($_GET["method"] == "zoom") { 
+                    $camMove->camZoomM();
+                }
 
-                    if($_GET["method"] == "dezoom") {
-                        
-                        $camMove->camZoomP();
-                    }
+                if($_GET["method"] == "dezoom") {    
+                    $camMove->camZoomP();
+                }
 
-                    if($_GET["method"] == "stopzoom") {
-                        
-                        $camMove->camStop();
-                    }
+                if($_GET["method"] == "stopzoom") { 
+                    $camMove->camStop();
                 }
             }
-        }    
+        }
         ?>
 
         <script type="text/javascript" src="Formulaire.js"></script>
@@ -207,17 +237,8 @@
                 socket = new WebSocket(socket);
 
                 createCookie(socket);
-                /*
-                let Creation = document.getElementById("InfoTypeFormulaire");
-                let Edit = document.getElementById("EditCam");
-                let Bouton = document.getElementById("Boutton");
-                let Suppr = document.getElementById("Suppr");
-                
-                Creation.innerText ="block" ;
-                Edit.style.display = "none";
-                Bouton.style.display = "none";
-                Suppr.style.display = "none";
-                */
+
+                //Envoie en base
             }
         </script>
         <script>

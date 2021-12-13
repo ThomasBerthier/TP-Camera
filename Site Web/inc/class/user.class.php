@@ -52,7 +52,8 @@ class User {
                 $_SESSION['Connect']=true;
                 //Refresh la page pour pouvoir acceder au autres page.
                 header("Location: index.php");
-            } else {
+            } else 
+            {
                 echo "L'utilisateur existe déjà.";
             }  
         } else 
@@ -88,6 +89,7 @@ class User {
 
             echo "ID : "+$this->_id;
 
+            $_SESSION['ID']=$this->_id;
             $_SESSION['Connect']=true;
             //Refresh la page pour pouvoir acceder au autres page.
             
@@ -100,8 +102,16 @@ class User {
      * Check if user is Editor
      * 
      */
-    public function isEditor() {
-        
+    public function isEditor($ID)
+    {
+        $stmt = $this->_sql->prepare("SELECT permission FROM user WHERE ID = ?");
+        $stmt->execute(array($ID));
+        $stmt = $stmt->fetch();
+
+        $perm = $stmt['permission'];
+        console_log("Perm stmt : ".$perm);
+
+        return $perm;
     }
 
     /**
