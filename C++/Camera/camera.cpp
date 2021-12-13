@@ -1,23 +1,46 @@
 #include "camera.h"
-
 #include <QDebug>
+#include <QSettings>
 
 Camera::Camera(QObject *parent)
 {
+
+// Link to file camera.ini
+    QSettings settings("/home/debian/Camera/camera.ini",
+                       QSettings::IniFormat);
+
+// Get Values from camera.ini
+QString IPMoxa = settings.value("IPMoxa").toString();
+
+qDebug() <<  "IP Moxa = " << IPMoxa;
+
+quint16 PortMoxa = settings.value("PortMoxa").toInt();
+
+qDebug() <<  "Port Moxa = " << PortMoxa;
+
+quint16 PortWebSocket = settings.value("PortWebSocket").toInt();
+
+qDebug() <<  "Port WebSocket = " << PortWebSocket;
+
+
 // Web Socket Configuration
 webSocketServer = new QWebSocketServer(QStringLiteral("WebServer"), QWebSocketServer::NonSecureMode, this);
 
+
 connect(webSocketServer, &QWebSocketServer::newConnection, this, &Camera::newWebConnexion);
-    webSocketServer->listen(QHostAddress::AnyIPv4, 16050);
+    webSocketServer->listen(QHostAddress::AnyIPv4, PortWebSocket);
 
 // Camera socket configuration
 socket = new QTcpSocket(this);
 connect(socket, &QTcpSocket::connected, this, &Camera::onSocketConnected);
-    socket->connectToHost("192.168.64.150", 4001);
+    socket->connectToHost(IPMoxa, PortMoxa);
+
 }
+
 
 void Camera::onSocketConnected()
 {
+
     qDebug() << "Socket connected";
 }
 
@@ -102,13 +125,16 @@ void Camera::camOff() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camUp() {
     // Convert string to hex
     QByteArray data = QByteArray::fromHex("81 01 06 01 07 07 03 01 FF");
+
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camDown() {
@@ -117,6 +143,7 @@ void Camera::camDown() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camLeft() {
@@ -125,6 +152,7 @@ void Camera::camLeft() {
 qDebug() << "ok";
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camRight() {
@@ -134,6 +162,7 @@ void Camera::camRight() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camPositionReset() {
@@ -142,6 +171,7 @@ void Camera::camPositionReset() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camMovementStop() {
@@ -150,6 +180,7 @@ void Camera::camMovementStop() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camZoomMin() {
@@ -158,6 +189,7 @@ void Camera::camZoomMin() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camZoomMax() {
@@ -166,6 +198,7 @@ void Camera::camZoomMax() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::camZoomStop() {
@@ -174,6 +207,7 @@ void Camera::camZoomStop() {
 
     // Send data to issue function
     issue(data);
+
 }
 
 void Camera::issue(QByteArray data)
