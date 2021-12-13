@@ -13,6 +13,12 @@ function CacherCreation()
 }
 */
 
+function AfficheEdit()
+{
+    let Creation = document.getElementById("InfoTypeFormulaire");
+    Creation.innerText ="Edit Configuration Caméra" ;
+}
+
 function createCam(localisation, ipAdresse, port)
 {
     //METHOD PERSO
@@ -27,15 +33,17 @@ function createCam(localisation, ipAdresse, port)
             //return rien
             console.log(code_html);
             let userData = JSON.parse(code_html);
-            let Creation = document.getElementById("NewCam");
+            let Creation = document.getElementById("InfoTypeFormulaire");
+            
             let Edit = document.getElementById("EditCam");
             let Bouton = document.getElementById("Boutton");
             let Suppr = document.getElementById("Suppr");
-        
-            Creation.style.display = "block";
+            
+            Creation.innerText ="Edit Configuration Caméra" ;
             Edit.style.display = "none";
             Bouton.style.display = "none";
             Suppr.style.display = "none";
+            
 
         },
         error : function(code_html, statut)

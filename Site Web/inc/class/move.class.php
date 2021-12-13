@@ -13,11 +13,12 @@ class CamMove
     /**
      * Set position up 
      */
-    public function camUp() 
+    public function camUp($socket) 
     {
         ?>
         <script type="text/javascript" src="Ordre.js">
-            Ordre("camUp");
+            console.log("frhefrefui");
+            Ordre("camUp", socket);
         </script>
         <?php
     }
@@ -25,11 +26,11 @@ class CamMove
     /**
      * Set position down 
      */
-    public function camDown() 
+    public function camDown($socket) 
     {
         ?>
         <script type="text/javascript" src="Ordre.js">
-        Ordre('moveDown');
+            Ordre('moveDown', $socket);
         </script>
         <?php
     }
@@ -37,11 +38,11 @@ class CamMove
     /**
      * Set position left 
      */
-    public function camLeft() 
+    public function camLeft($socket) 
     {
         ?>
         <script type="text/javascript" src="Ordre.js">
-        Ordre('moveLeft');
+            Ordre('moveLeft', $socket);
         </script>
         <?php
 
@@ -50,11 +51,11 @@ class CamMove
     /**
      * Set position right 
      */
-    public function camRight() 
+    public function camRight($socket) 
     {
         ?>
         <script type='text/javascript' src='Ordre.js'>
-        Ordre('moveRight');
+            Ordre('moveRight', $socket);
         </script>
         <?php
 
@@ -63,11 +64,11 @@ class CamMove
     /**
      * Set zoom + 
      */
-    public function camZoomP() 
+    public function camZoomP($socket) 
     {
         ?>
         <script type='text/javascript' src='Ordre.js'>
-        Ordre('zoomMax');
+            Ordre('zoomMax', $socket);
         </script>
         <?php
 
@@ -76,11 +77,11 @@ class CamMove
     /**
      * Set zoom -
      */
-    public function camZoomM() 
+    public function camZoomM($socket) 
     {
         ?>
         <script type='text/javascript' src='Ordre.js'>
-        Ordre('zoomMin');
+        Ordre('zoomMin', $socket);
         </script>
         <?php
 
