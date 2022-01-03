@@ -149,14 +149,13 @@ void Camera::camDown() {
 void Camera::camLeft() {
     // Convert string to hex
     QByteArray data = QByteArray::fromHex("81 01 06 01 09 14 01 03 FF");
-qDebug() << "ok";
+
     // Send data to issue function
     issue(data);
 
 }
 
 void Camera::camRight() {
-    qDebug() << "ok cam right";
     // Convert string to hex
     QByteArray data = QByteArray::fromHex("81 01 06 01 10 10 02 03 FF");
 
