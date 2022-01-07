@@ -16,7 +16,7 @@
     <body>
         <script>
             var socket;
-            console.log(socket);
+            console.log("socket : "+socket);
         </script>
         <!-- Créer variable de socket pour l'avoir en global -->
         <?php
@@ -27,32 +27,31 @@
             $ipadress = !empty($_POST['ipadress']) ? $_POST['ipadress'] : "";
             $port = !empty($_POST['port']) ? $_POST['port'] : "";
 
-            $fulldick = "ws://".$ipadress.":".$port;
+            //$fulldick = "ws://".$ipadress.":".$port;
 
-            console_log("PHP : ".$fulldick);
-
+           // console_log("PHP : ".$fulldick);
 
             $IDUser = $_SESSION['ID'];
-
             $permission = $user->isEditor($IDUser);
 
             console_log("Perm : ".$permission);
             //Vérifier si il y a 1 caméra en base : 
             $IDCam = $cam->verifCam();
+            console_log("ID Cam : ".$IDCam["ID"]);
 
             //Si la cam existe en base :
-            if ($IDCam != true)
+            if ($IDCam["ID"] > 1)
             {
                 //Si l'utilisateur est admin
                 if ($permission == 1)
                 {
                     ?>
                     <!-- Formulaire pour connecter la cam -->
-                    <form id="NewCam" method="POST">
+                    <form id="NewCam" method="POST" onsubmit="return false">
                         <h1 id="InfoTypeFormulaire">Configuration caméra :</h1>
                         <!-- Unexpected indentifier -->
                         <label><strong>Localisation</strong></label>
-                        <input type="text" placeholder="Localisation" name="localisation" required>
+                        <input id="localisation" type="text" placeholder="Localisation" name="localisation" required>
         
                         <label><strong>Adresse IP</strong></label>
                         <input id="ipadress" type="text" placeholder="Adresse IP" name="ipadress" required>
@@ -229,16 +228,32 @@
             function creerCam(socket)
             {
                 //Récuperer les valeurs depuis l'ID
+                var Localisation = document.getElementById("localisation").value
                 var IP = document.getElementById("ipadress").value
                 var Port = document.getElementById("port").value
 
                 socket = "ws://"+IP+":"+Port;
-
                 socket = new WebSocket(socket);
-
                 createCookie(socket);
 
-                //Envoie en base
+
+
+                $.ajax({
+                    url: "tamere.php",
+                    type: "POST",
+                    data: {Localisation : Localisation, IP: IP, Port : Port, action: "newCam"},
+                    success: function(data)
+                    {
+                        console.log(Localisation);
+                        console.log(IP);
+                        console.log(Port);
+
+                    },
+                    error : function(code_html, statut)
+                    {
+                        alert("Tuez moi");
+                    },
+                });
             }
         </script>
         <script>

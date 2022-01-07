@@ -116,7 +116,7 @@ class Cam {
 
     public function verifCam()
     {
-        $stmt = $this->_sql->prepare("SELECT * FROM `cam`");
+        $stmt = $this->_sql->prepare("SELECT * FROM cam");
         $stmt->execute(array($this->id));
         $stmt = $stmt->fetch();
         console_log($stmt['ID']);

@@ -4,7 +4,7 @@
 function Ordre(Ordre)
 {
     //Envoier commande en héxa
-    //var socket = new WebSocket("ws://192.168.65.28:16050");
+    var socket = new WebSocket("ws://192.168.65.153:16050");
     socket.send(Ordre);
 }
 
